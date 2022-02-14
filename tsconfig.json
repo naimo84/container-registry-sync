@@ -1,0 +1,34 @@
+{
+	"compilerOptions": {
+		"module": "ES6",
+		"target": "es6",
+		"outDir": "dist",
+		"lib": [
+			"es2019"
+		],
+		"baseUrl": "./",	
+		"sourceMap": true,
+		"rootDir": "src",
+		"strict": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"experimentalDecorators": true,
+		"declaration": true,
+		"esModuleInterop": true,
+		"moduleResolution": "Node",
+		"skipLibCheck": true		
+	},
+	"include": [
+		"**/*.ts"
+	],
+	"exclude": [
+		"node_modules",
+		"dist",
+		"buildSrc",
+		"test"
+	],
+}

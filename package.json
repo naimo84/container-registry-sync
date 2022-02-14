@@ -1,0 +1,54 @@
+{
+  "name": "container-registry-sync",
+  "version": "0.1.0",
+  "description": "sync all container images between two registries",
+  "exports": "./dist/index.mjs",
+  "type": "module",
+  "scripts": {
+    "watch": "node ./buildSrc/esbuild.js --watch",
+    "build": "node ./buildSrc/esbuild.js",
+    "compile": "npm run build && npm run tsc-declaration",
+    "tsc-declaration": "tsc --declaration --emitDeclarationOnly",
+    "tsc": "tsc",
+    "release": "release-it"
+  },
+  "bin": {
+    "registry-sync": "./bin/registry-sync.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/naimo84/container-registry-sync"
+  },
+  "keywords": [
+    "sync",
+    "docker",
+    "images",
+    "registry",
+    "push",
+    "pull",
+    "image"
+  ],
+  "author": "naimo84",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/naimo84/container-registry-sync/issues"
+  },
+  "homepage": "https://github.com/naimo84/container-registry-sync",
+  "dependencies": {
+    "101": "^1.6.3",
+    "@snyk/docker-registry-v2-client": "^2.6.1",
+    "commander": "~2.2.0",
+    "dockerode": "3.3.1",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/dockerode": "^2.5.20",
+    "@types/lodash": "^4.14.178",
+    "@types/node": "^17.0.17",
+    "esbuild": "^0.14.21",
+    "esbuild-node-externals": "^1.4.1",
+    "typescript": "^4.5.5"
+  }
+}
