@@ -1,6 +1,6 @@
 {
   "name": "container-registry-sync",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "sync all container images between two registries",
   "exports": "./dist/index.mjs",
   "type": "module",
@@ -8,7 +8,7 @@
     "watch": "node ./buildSrc/esbuild.js --watch",
     "build": "node ./buildSrc/esbuild.js",
     "compile": "npm run build && npm run tsc-declaration",
-    "tsc-declaration": "tsc --declaration --emitDeclarationOnly",  
+    "tsc-declaration": "tsc --declaration --emitDeclarationOnly",
     "release": "release-it"
   },
   "bin": {
