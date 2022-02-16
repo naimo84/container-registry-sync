@@ -42,7 +42,7 @@ export class RegistrySync {
         for (let repo of repos) {
           const filterRegExp = new RegExp(mapping.from);
           const filterMatch = repo.match(filterRegExp);
-          if (new RegExp(mapping.excludeRepo).test(repo) || repo === "odav/wildfly") {
+          if (new RegExp(mapping.excludeRepo).test(repo)) {
             continue;
           }
           if (filterMatch && filterMatch.length > 0) {
@@ -64,7 +64,7 @@ export class RegistrySync {
 
                 let image = this.docker.getImage(`${task.source.registry}/${repo}:${tag}`);
 
-                const newRepo = repo.replace(new RegExp(mapping.from), mapping.to)
+                const newRepo = repo.replace(new RegExp(mapping.from), mapping.to);
 
                 pDebounce(() => image.tag({ "repo": `${task.target.registry}/${newRepo}`, "tag": tag }), 200);
                 console.log(`${task.target.registry}/${newRepo}:${tag} tagged`);
