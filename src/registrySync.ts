@@ -1,7 +1,7 @@
 import { parseDockerHost } from "./helper";
 import Dockerode from 'dockerode';
 import { getRepos, getTags } from "@snyk/docker-registry-v2-client";
-
+import pDebounce from 'p-debounce';
 export interface SyncOptions {
   tasks: any;
   filter: any;
@@ -60,25 +60,23 @@ export class RegistrySync {
                     console.log(`${task.source.registry}/${repo}:${tag} pulled`);
                     err ? reject(err) : resolve(res);
                   });
-                });
-
-
+                })
 
                 let image = this.docker.getImage(`${task.source.registry}/${repo}:${tag}`);
 
                 const newRepo = repo.replace(new RegExp(mapping.from), mapping.to)
 
-                await image.tag({ "repo": `${task.target.registry}/${newRepo}`, "tag": tag });
+                pDebounce(() => image.tag({ "repo": `${task.target.registry}/${newRepo}`, "tag": tag }), 200);
                 console.log(`${task.target.registry}/${newRepo}:${tag} tagged`);
 
                 let newImage = this.docker.getImage(`${task.target.registry}/${newRepo}:${tag}`);
-                await newImage.push({
+                pDebounce(() => newImage.push({
                   authconfig: {
                     username: task.target.username,
                     password: task.target.password,
                     serveraddress: task.target.registry
                   }
-                });
+                }), 200);
                 console.log(`${task.target.registry}/${newRepo}:${tag} pushed`);
 
               } catch (err) {
