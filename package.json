@@ -8,12 +8,12 @@
     "watch": "node ./buildSrc/esbuild.js --watch",
     "build": "node ./buildSrc/esbuild.js",
     "compile": "npm run build && npm run tsc-declaration",
-    "tsc-declaration": "tsc --declaration --emitDeclarationOnly",
-    "tsc": "tsc",
+    "tsc-declaration": "tsc --declaration --emitDeclarationOnly",  
     "release": "release-it"
   },
   "bin": {
-    "registry-sync": "./bin/registry-sync.mjs"
+    "registry-sync": "./bin/registry-sync.mjs",
+    "crs": "./bin/registry-sync.mjs"
   },
   "repository": {
     "type": "git",
@@ -22,9 +22,13 @@
   "keywords": [
     "sync",
     "docker",
+    "container",
+    "two",
     "images",
     "registry",
     "push",
+    "source",
+    "target",
     "pull",
     "image"
   ],
@@ -49,6 +53,7 @@
     "@types/node": "^17.0.17",
     "esbuild": "^0.14.21",
     "esbuild-node-externals": "^1.4.1",
+    "release-it": "^14.12.4",
     "typescript": "^4.5.5"
   }
 }

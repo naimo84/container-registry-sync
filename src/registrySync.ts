@@ -19,10 +19,9 @@ export class RegistrySync {
   constructor(opts: SyncOptions) {
     this.dryrun = opts.dryrun;
     this.bailOnError = opts.bail;
-
-    this.filter = opts.filter;
     this.tasks = opts.tasks;
     opts.host = opts.host || process.env.DOCKER_HOST || '/var/run/docker.sock';
+    
     this.docker = new Dockerode(parseDockerHost(opts.host));
   }
 

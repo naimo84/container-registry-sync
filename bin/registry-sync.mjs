@@ -12,10 +12,7 @@ program
   .option('-d, --dryrun', 'Enable dryrun (simulate pushes and pulls). Flag.')
   .option('-h, --host <s>', 'Docker host. Default: $DOCKER_HOST or unix:///var/run/docker.sock')
   .option('-b --bail', 'Exit process on first error. Flag.')
-  .option('-i --private', 'Only sync images with internal registries. Flag.')
-  .option('-p --public', 'Only sync images with the public registry. Flag.')
-  .option('-f --filter <s>', '')
-  .option('--config <s>', '');
+  .option('--config <s>', 'Path to config yaml.');
 
 program.parse(process.argv);
 
