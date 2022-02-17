@@ -4,6 +4,9 @@
   "description": "sync all container images between two registries",
   "exports": "./dist/index.mjs",
   "type": "module",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "scripts": {
     "watch": "node ./buildSrc/esbuild.js --watch",
     "build": "node ./buildSrc/esbuild.js",
