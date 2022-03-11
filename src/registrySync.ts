@@ -21,7 +21,7 @@ export class RegistrySync {
     this.bailOnError = opts.bail;
     this.tasks = opts.tasks;
     opts.host = opts.host || process.env.DOCKER_HOST || '/var/run/docker.sock';
-    
+
     this.docker = new Dockerode(parseDockerHost(opts.host));
   }
 
@@ -49,9 +49,14 @@ export class RegistrySync {
 
             for (const tag of tags) {
               try {
-                if (new RegExp(mapping.excludeTags).test(tag)) {
-                  continue;
+                let found = false;
+                for (const excludeTag of mapping.excludeTags.split(",")) {
+                  if (new RegExp(excludeTag).test(tag)) {
+                    found = true;
+                  }
                 }
+                if (found) continue;
+
                 const dockerpull = await this.docker.pull(`${task.source.registry}/${repo}:${tag}`, { "disable-content-trust": "false" });
 
                 await new Promise((resolve, reject) => {
@@ -65,18 +70,24 @@ export class RegistrySync {
 
                 const newRepo = repo.replace(new RegExp(mapping.from), mapping.to);
 
-                pDebounce(() => image.tag({ "repo": `${task.target.registry}/${newRepo}`, "tag": tag }), 200);
+                // await pDebounce(() => {
+                image.tag({ "repo": `${task.target.registry}/${newRepo}`, "tag": tag });
                 console.log(`${task.target.registry}/${newRepo}:${tag} tagged`);
+                //}, 200);
+
 
                 let newImage = this.docker.getImage(`${task.target.registry}/${newRepo}:${tag}`);
-                pDebounce(() => newImage.push({
+                // await pDebounce(() => {
+                newImage.push({
                   authconfig: {
                     username: task.target.username,
                     password: task.target.password,
                     serveraddress: task.target.registry
                   }
-                }), 200);
+                });
                 console.log(`${task.target.registry}/${newRepo}:${tag} pushed`);
+                //}, 200);
+
 
               } catch (err) {
                 console.log(`${task.target.registry}/${repo}:${tag} failed`);
